@@ -1,4 +1,7 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'main.dart';
 
@@ -11,8 +14,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    initial();
+  }
+
+  void initial() async {
+    await Future.delayed(const Duration(seconds: 3));
+    FlutterNativeSplash.remove();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // ignore: no_leading_underscores_for_local_identifiers
     final _textController = TextEditingController();
     final _textController1 = TextEditingController();
 
@@ -34,23 +47,25 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               actions: [
-                MaterialButton(
-                    child: const Text("exit"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      _textController.clear();
-                    }),
-                const SizedBox(
-                  width: 110,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MaterialButton(
+                        child: const Text("exit"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _textController.clear();
+                        }),
+                    MaterialButton(
+                        child: const Text("save"),
+                        onPressed: () {
+                          listMy[i] = _textController1.value.text.toString();
+                          setState(() {});
+                          _textController.clear();
+                          Navigator.pop(context);
+                        })
+                  ],
                 ),
-                MaterialButton(
-                    child: const Text("save"),
-                    onPressed: () {
-                      listMy[i] = _textController1.value.text.toString();
-                      setState(() {});
-                      _textController.clear();
-                      Navigator.pop(context);
-                    })
               ],
             );
           });
@@ -74,23 +89,24 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               actions: [
-                MaterialButton(
-                    child: const Text("exit"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      _textController.clear();
-                    }),
-                const SizedBox(
-                  width: 110,
+                Row(
+                  children: [
+                    MaterialButton(
+                        child: const Text("exit"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _textController.clear();
+                        }),
+                    MaterialButton(
+                        child: const Text("save"),
+                        onPressed: () {
+                          listMy.add(_textController.value.text.toString());
+                          setState(() {});
+                          _textController.clear();
+                          Navigator.pop(context);
+                        })
+                  ],
                 ),
-                MaterialButton(
-                    child: const Text("save"),
-                    onPressed: () {
-                      listMy.add(_textController.value.text.toString());
-                      setState(() {});
-                      _textController.clear();
-                      Navigator.pop(context);
-                    })
               ],
             );
           });
@@ -98,8 +114,9 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Hello"),
-        centerTitle: true,
+        title: const Text(
+          "To Do application",
+        ),
         backgroundColor: Colors.black87,
       ),
       body: SafeArea(
@@ -116,7 +133,11 @@ class _HomePageState extends State<HomePage> {
                       title: Align(
                         child: Text(
                           Provider.of<List<String>>(context)[i],
-                          style: const TextStyle(color: Colors.yellow),
+                          style: const TextStyle(
+                            color: Colors.yellow,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700
+                          ),
                         ),
                       ),
                       leading: IconButton(
@@ -135,8 +156,6 @@ class _HomePageState extends State<HomePage> {
                           setState(() {});
                         },
                       ),
-                      onTap: () => debugPrint("home"),
-                      onLongPress: () => debugPrint("work"),
                     )
                 );
               })

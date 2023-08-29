@@ -1,10 +1,15 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:untitled3/homepage.dart';
 import 'package:provider/provider.dart';
 
-var listMy = ["my", "home", "page",];
+var listMy = ["Hello!"];
 
-void main() {
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   runApp(Provider(
     create: (context) => listMy,
@@ -24,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.transparent,
-        )
+        ),
       ),
     );
   }
